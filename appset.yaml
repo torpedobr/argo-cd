@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: helm-charts-root
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.ibm.com/dmkonovalov/argotest.git
+      revision: main
+      directories:
+        - path: "*"
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: argopoc-project
+      source:
+        repoURL: https://github.ibm.com/dmkonovalov/argotest.git
+        targetRevision: main
+        path: '{{path}}'
+        helm:
+          releaseName: '{{path.basename}}'
+      destination:
+        server: https://127.0.0.1:6443
+        namespace: '{{path.basename}}'
