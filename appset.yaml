@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/torpedobr/argo-cd.git
-        revision: app-set
+        revision: main
         directories:
           - path: "models/*"
   template:
@@ -23,7 +23,7 @@ spec:
           valueFiles:
             - dev/{{path.basename}}.yaml
       destination:
-        server: https://127.0.0.1:6443
+        server: https://c111-e.us-east.containers.cloud.ibm.com:31252
         namespace: argo-poc
       syncPolicy:
         automated:
