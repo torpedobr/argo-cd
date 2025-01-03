@@ -23,7 +23,7 @@ spec:
           valueFiles:
             - dev/{{path.basename}}.yaml
       destination:
-        server: https://kubernetes.default.svc
+        server: https://127.0.0.1:6443
         namespace: argo-poc
       syncPolicy:
         automated:
