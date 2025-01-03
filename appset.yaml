@@ -16,7 +16,7 @@ spec:
     spec:
       project: argopoc-project
       source:
-        repoURL: git@github.ibm.com:dmkonovalov/argotest.git
+        repoURL: https://github.com/torpedobr/argo-cd.git
         targetRevision: app-set
         chart: '{{path.basename}}'
         helm:
