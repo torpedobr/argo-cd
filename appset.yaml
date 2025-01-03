@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/torpedobr/argo-cd.git
-        revision: main
+        revision: app-set
         directories:
           - path: "models/*"
   template:
