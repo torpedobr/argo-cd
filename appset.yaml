@@ -1,26 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: helm-charts-root
+  name: helm-charts-appset
   namespace: argocd
 spec:
   generators:
-  - git:
-      repoURL: https://github.ibm.com/dmkonovalov/argotest.git
-      revision: main
-      directories:
-        - path: "*"
+    - git:
+        repoURL: git@github.ibm.com:dmkonovalov/argotest.git
+        revision: main
+        directories:
+          - path: "*" # Adjust this to match your Helm chart paths in the repo
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{path.basename}}' # Name the application after the Helm chart directory
     spec:
-      project: argopoc-project
+      project: default # Replace with your ArgoCD project if necessary
       source:
-        repoURL: https://github.ibm.com/dmkonovalov/argotest.git
+        repoURL: git@github.ibm.com:dmkonovalov/argotest.git
         targetRevision: main
         path: '{{path}}'
         helm:
-          releaseName: '{{path.basename}}'
+          releaseName: '{{path.basename}}' # Use the directory name as the release name
       destination:
-        server: https://127.0.0.1:6443
-        namespace: '{{path.basename}}'
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}' # Optional: Create a namespace per Helm chart
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
